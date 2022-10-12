@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--
+ASSIGNMENT RULES
+- The solution must be pushed to the repository and be available for the tutors by the end of the day
+- You can ask for tutor's help
+- You can google / use StackOverflow BUT we suggest you to use just the material provided
+- To test the page, just open it with your default browser.
+
+ASSIGNMENT TOPIC
+You are building a task list website.
+The user should be able to see the list of tasks, add new ones, delete existing ones or sort them all alphabetically.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping List</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <h1>Welcome to your personal Task List!</h1>
+    <br />
+
+    <span>
+      You can add any task you like by writing it in the specified field and
+      then press "Add new task"
+    </span>
+    <br />
+    <br />
+
+    <input type="text" id="newTask" />
+    <input type="button" value="Add new Task" onclick="addNewTask()" />
+    <!-- Exercise 3 & 4 - Add new Buttons -->
+    <input type="button" value="Remove First Task" onclick="removeFirst()" />
+    <input type="button" value="Remove Last Task" onclick="removeLast()" />
+
+    <ul id="myTaskList"></ul>
+
+    <hr />
+
+    <input type="color" placeholder="Color" id="colorPicker" />
+    <input type="button" value="Change task background" id="test" />
+
+    <hr />
+
+    <input type="button" value="Sort" onclick="bubbleSort()" />
+    <script>
+      // Exercise 5 - Add a new task to the list
+      function addNewTask() {
+        const taskDetails = document.getElementById('newTask')
+        const list = document.getElementById('myTaskList')
+
+        //Event 10 - Remove element when clicking on it
+        list.addEventListener('click', function (event) {
+          if (event.target.classList.contains('list-item')) {
+            event.target.parentNode.removeChild(event.target)
+          }
+        })
+
+        const newListItem = document.createElement('li')
+        let newListContent = document.createTextNode(taskDetails.value)
+        newListItem.classList.add('list-item')
+        newListItem.appendChild(newListContent)
+        list.appendChild(newListItem)
+
+        list.appendChild
+      }
+      // Exercise 6 - Remove the last task
+      function removeLast() {
+        let list = document.getElementById('myTaskList')
+        let lastTask = list.lastElementChild
+
+        list.removeChild(lastTask)
+        console.log(lastTask)
+      }
+      // Exercise 7  - Remove the first task
+      function removeFirst() {
+        let list = document.getElementById('myTaskList')
+        let lastTask = list.firstElementChild
+
+        list.removeChild(lastTask)
+        console.log(lastTask)
+      }
+
+      // Exercise 8 - Create array from the task list
+      function getTasksAsArray() {
+        const list = document.getElementById('myTaskList').childNodes
+        for (let i = 0; i < list.length; i++) {
+          console.log(list[i].innerText)
+        }
+        return list
+      }
+
+      //Exercise 9 - Add create a function to add an onclick function to change the background colour of the list
+      function changeTaskBackgroundColor() {
+        const buttons = document.getElementById('test')
+        buttons.onclick = function testing() {
+          const color = document.getElementById('colorPicker').value
+          const listItems = getTasksAsArray()
+
+          for (let i = 0; i < listItems.length; i++) {
+            listItems[i].style.backgroundColor = color
+          }
+        }
+        console.log(buttons)
+      }
+
+      /* ### EXTRA ### */
+
+      function bubbleSort() {
+        let list = document.getElementById('myTaskList')
+
+        let needsSwitching
+        let switchingStillNeeded = true
+
+        while (switchingStillNeeded) {
+          switchingStillNeeded = false
+          listElements = document.getElementsByTagName('li')
+          console.log(listElements)
+
+          for (let i = 0; i < listElements.length - 1; i++) {
+            needsSwitching = false
+            if (
+              listElements[i].innerHTML.toLowerCase() >
+              listElements[i + 1].innerHTML.toLowerCase()
+            ) {
+              needsSwitching = true
+              break
+            }
+            if (needsSwitching) {
+              listElements[i].parentNode.insertBefore(
+                listElements[i + 1],
+                listElements[i],
+                (switchingStillNeeded = true),
+              )
+            }
+          }
+        }
+      }
+
+      /* EXERCISE 11:
+                     Create a function "bubbleSort()" which sorts the task list alphabetically using the bubble sort algorithm
+            */
+
+      /* #### Suggestion:
+             - Break the code into many function for semplicity
+             - Reuse the functions previously created */
+    </script>
+  </body>
+</html>
